@@ -3,6 +3,8 @@
 #include "vec2.hpp"
 #include "mat2.hpp"
 
+//Vektoren Testcase
+
 TEST_CASE("describe_struct", "[struct]")
 {
 	Vec2 origin;
@@ -139,6 +141,70 @@ TEST_CASE("describe_multmat2-two", "[multmat2-two]")
 	REQUIRE(result.x21 == Approx(24.0f));
 	REQUIRE(result.x12 == Approx(47.0f));
 	REQUIRE(result.x22 == Approx(46.0f));
+}
+
+TEST_CASE("describe_inverse", "[inverse]")
+{
+	Mat2 normal{1.0f, 3.0f, 2.0f, 4.0f};
+	Mat2 invers;
+	invers = inverse(normal);
+	REQUIRE(invers.x11 == Approx(-2.0f));
+	REQUIRE(invers.x21 == Approx(1.5f));
+	REQUIRE(invers.x12 == Approx(1.0f));
+	REQUIRE(invers.x22 == Approx(-0.5f));
+}
+
+TEST_CASE("describe_transpos", "[transpos]")
+{
+	Mat2 normal{1.0f, 3.0f, 2.0f, 4.0f};
+	Mat2 trans;
+	trans = transpose(normal);
+	REQUIRE(trans.x11 == Approx(1.0f));
+	REQUIRE(trans.x21 == Approx(2.0f));
+	REQUIRE(trans.x12 == Approx(3.0f));
+	REQUIRE(trans.x22 == Approx(4.0f));
+}
+
+TEST_CASE("describe_rotate", "[rotate]")
+{
+	Mat2 m{1.0f, 3.0f, 2.0f, 4.0f};
+	Mat2 rotate= make_rotation_mat2 (180);
+	m *= rotate;
+	REQUIRE(m.x11 == Approx(-2.20077f));
+	REQUIRE(m.x21 == Approx(-4.99999f));
+	REQUIRE(m.x12 == Approx(-0.395768f));
+	REQUIRE(m.x22 == Approx(0.009618));
+}
+
+TEST_CASE("describe_determinante", "[determinante]")
+{
+	Mat2 m{1.0f, 3.0f, 2.0f, 4.0f};
+	float result;
+	result = m.det();
+	REQUIRE(result == Approx(-2.0f));
+}
+
+
+
+//Vektoren-Matrizen Operationen
+TEST_CASE("describe_VecMatMult", "[VecMatMult]")//vek*mat
+{
+	Vec2 v{1.0f, 2.0f};
+	Mat2 m{1.0f, 3.0f, 2.0f, 4.0f};
+	Vec2 result;
+	result = m*v;
+	REQUIRE(result.x == Approx(5.0f));
+	REQUIRE(result.y == Approx(11.0f));
+}
+
+TEST_CASE("describe_MatVecMult", "[MatVecMult]")//mat*vek
+{
+	Vec2 v{1.0f, 2.0f};
+	Mat2 m{1.0f, 3.0f, 2.0f, 4.0f};
+	Vec2 result;
+	result = v*m;
+	REQUIRE(result.x == Approx(5.0f));
+	REQUIRE(result.y == Approx(11.0f));
 }
 
 int main(int argc, char *argv[])
