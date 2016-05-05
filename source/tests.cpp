@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch.hpp>
 #include "vec2.hpp"
+#include "mat2.hpp"
 
 TEST_CASE("describe_struct", "[struct]")
 {
@@ -95,6 +96,49 @@ TEST_CASE("describe_multiplicatethree", "[multiplicatethree]")
 	Vec2 result = s*v;
 	REQUIRE(result.x == Approx(51.6f));
 	REQUIRE(result.y == Approx(14.4f));
+}
+
+//Matrizen-Testcase
+
+TEST_CASE("describe_structmat2", "[structmat2]")
+{
+	Mat2 origin;
+	REQUIRE(origin.x11 == 1.0f);
+	REQUIRE(origin.x21 == 0.0f);
+	REQUIRE(origin.x12 == 0.0f);
+	REQUIRE(origin.x22 == 1.0f);
+}
+
+TEST_CASE("describe_user_constructormat2", "[user_constructormat2]")
+{
+	Mat2 user_constructormat2{5.0f, 7.0f, 6.0f, 8.0f};
+	REQUIRE(user_constructormat2.x11 == Approx(5.0f));
+	REQUIRE(user_constructormat2.x21 == Approx(7.0f));
+	REQUIRE(user_constructormat2.x12 == Approx(6.0f));
+	REQUIRE(user_constructormat2.x22 == Approx(8.0f));
+}
+
+TEST_CASE("describe_multmat2", "[multmat2]")
+{
+	Mat2 result{5.0f, 7.0f, 3.0f, 2.0f};
+	Mat2 mult{2.0f, 5.0f, 4.0f, 9.0f};
+	result *= mult;
+	REQUIRE(result.x11 == Approx(25.0f));
+	REQUIRE(result.x21 == Approx(24.0f));
+	REQUIRE(result.x12 == Approx(47.0f));
+	REQUIRE(result.x22 == Approx(46.0f));
+}
+
+TEST_CASE("describe_multmat2-two", "[multmat2-two]")
+{
+	Mat2 m1{5.0f, 7.0f, 3.0f, 2.0f};
+	Mat2 m2{2.0f, 5.0f, 4.0f, 9.0f};
+	Mat2 result;
+	result = m1*m2;
+	REQUIRE(result.x11 == Approx(25.0f));
+	REQUIRE(result.x21 == Approx(24.0f));
+	REQUIRE(result.x12 == Approx(47.0f));
+	REQUIRE(result.x22 == Approx(46.0f));
 }
 
 int main(int argc, char *argv[])
