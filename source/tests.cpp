@@ -2,6 +2,8 @@
 #include <catch.hpp>
 #include "vec2.hpp"
 #include "mat2.hpp"
+#include "color.hpp"
+#include "circle.hpp"
 
 //Vektoren Testcase
 
@@ -205,6 +207,110 @@ TEST_CASE("describe_MatVecMult", "[MatVecMult]")//mat*vek
 	result = v*m;
 	REQUIRE(result.x == Approx(5.0f));
 	REQUIRE(result.y == Approx(11.0f));
+}
+//Circle-Testcase
+TEST_CASE("describe_circlearea", "[circlearea]")
+{
+	float radius{2.0f};
+	Vec2 center{0.0f, 0.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	REQUIRE(test.area() == Approx(12.5664f));
+}
+
+TEST_CASE("describe_circleCENTERget", "[circleCENTERget]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	Vec2 v;
+	v = test.center();
+	REQUIRE(v.x == (center.x));
+	REQUIRE(v.y == (center.y));
+}
+
+TEST_CASE("describe_circleCOLORget", "[circleCOLORget]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	Color a;
+	a = test.color();
+	REQUIRE(a.r == (white.r));
+	REQUIRE(a.g == (white.g));
+	REQUIRE(a.b == (white.b));
+}
+
+TEST_CASE("describe_circleRADIUSget", "[circleRADIUSget]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	float a;
+	a = test.radius();
+	REQUIRE(a == (radius));
+}
+
+TEST_CASE("describe_Bboxconstruct", "[Bboxconstruct]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Bbox test{center, radius};
+	REQUIRE(test.bcenter_.x == (center.x));
+	REQUIRE(test.bcenter_.y == (center.y));
+	REQUIRE(test.bradius_ == (radius));
+}
+
+TEST_CASE("describe_circleBBOXget", "[circleBBOXget]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	Bbox dest{center, radius};
+	Bbox get = test.bounding_box();
+	REQUIRE(get.bcenter_.x == (dest.bcenter_.x));
+	REQUIRE(get.bcenter_.y == (dest.bcenter_.y));
+	REQUIRE(get.bradius_ == (dest.bradius_));
+}
+
+TEST_CASE("describe_circleCOLORset", "[circleCOLORset]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	Color red{1.0f, 0.0f, 0.0f};
+	test.color(red);
+	REQUIRE(test.color().r == (1.0f));
+	REQUIRE(test.color().g == (0.0f));
+	REQUIRE(test.color().b == (0.0f));
+}
+
+TEST_CASE("describe_circleCENTERset", "[circleCENTERset]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	Vec2 v{1.5f, 2.3f};
+	test.center(v);
+	REQUIRE(test.center().x == (v.x));
+	REQUIRE(test.center().y == (v.y));
+}
+
+TEST_CASE("describe_circleRADIUSset", "[circleRADIUSset]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	float a{10.0f};
+	test.radius(a);
+	REQUIRE(test.radius() == (a));
 }
 
 int main(int argc, char *argv[])
