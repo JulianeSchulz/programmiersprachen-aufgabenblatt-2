@@ -4,6 +4,7 @@
 #include "mat2.hpp"
 #include "color.hpp"
 #include "circle.hpp"
+#include "rectangle.hpp"
 
 //Vektoren Testcase
 
@@ -311,6 +312,41 @@ TEST_CASE("describe_circleRADIUSset", "[circleRADIUSset]")
 	float a{10.0f};
 	test.radius(a);
 	REQUIRE(test.radius() == (a));
+}
+
+TEST_CASE("describe_const_REC", "[const_REC]")
+{
+	Vec2 cent{1.0f, 2.0f};
+	float rechts{2.0f};
+	float unten{5.0f};
+	Color white = {1.0f};
+	Rectangle test{cent, rechts, unten, white};
+	REQUIRE(test.center_.x == (cent.x));
+	REQUIRE(test.center_.y == (cent.y));
+	REQUIRE(test.right_ == (rechts));
+	REQUIRE(test.down_ == (unten));
+	REQUIRE(test.color_.r==(white.r));
+	REQUIRE(test.color_.g==(white.g));
+	REQUIRE(test.color_.b==(white.b));
+}
+
+TEST_CASE("describe_Circle_Circum", "[Circle_Circum]")
+{
+	float radius{2.0f};
+	Vec2 center{1.0f, 2.0f};
+	Color white = {1.0f};
+	Circle test{center, radius, white};
+	REQUIRE(test.circumference() == Approx(12.5664f));
+}
+
+TEST_CASE("describe_Rectangle_Circum", "[Rectangle_Circum]")
+{
+	Vec2 cent{1.0f, 2.0f};
+	float rechts{2.0f};
+	float unten{5.0f};
+	Color white = {1.0f};
+	Rectangle test{cent, rechts, unten, white};
+	REQUIRE(test.circumference() == Approx(14.0f));
 }
 
 int main(int argc, char *argv[])

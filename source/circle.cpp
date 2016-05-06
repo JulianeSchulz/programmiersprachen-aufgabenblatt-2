@@ -13,6 +13,11 @@ float Circle::area()const{
 	return pow(temp.radius_,2)*M_PI;
 }
 
+float Circle::circumference() const{
+	Circle temp = *this;
+	return 2*temp.radius_*M_PI;
+}
+
 float Circle::radius()const{
 	return this -> radius_;
 }
